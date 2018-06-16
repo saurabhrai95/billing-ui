@@ -1,0 +1,339 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <style>
+        .form-control {
+            width: auto;
+        }
+
+        .card-deck {
+            width: 95%;
+        }
+
+        #cards {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        
+    </style>
+</head>
+
+<body style="background-color: #D3D3D3;">
+
+    <!-- page header -->
+
+    <div class="bg-dark clearfix text-center" id="pageheader">
+        <div class="d-inline-block float-left">
+            <img src="logo.png" class=" mx-3 my-2" />
+        </div>
+        <div class="d-inline-block pt-3">
+            <h2 class="font-weight-bold font-italic text-white">One Stop Solution for All your business needs !!</h2>
+        </div>
+        <div class="d-inline-block float-right p-3">
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#login">Log In</button>
+            <span class="text-white mx-2"> or </span>
+            <button class="btn btn-info btn-sm mx-2" type="button" data-toggle="modal" data-target="#signup">SignUp</button>
+        </div>
+
+    </div>
+
+
+    <!-- login form -->
+
+
+    <div class="modal fade" id="login" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content p-4"  style="border-radius: 30px;">
+                <div class="modal-header">
+                    <h2 class="d-inline">Welcome to Billz It</h2>
+                    <button class="close" type="button" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body mt-3">
+                    <p class="text-danger text-center" id="loginerrormsg"></p>
+                    <form action="#" id="loginform">
+                        <div class="form-group">
+                            <label for="uname">Username : </label>
+                            <input type="text" name="uname" class="form-control float-right" />
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password : </label>
+                            <input type="password" name="pwd" class="form-control float-right" />
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-sm mt-2" type="button" onclick="login();">Log In</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center" style="margin:auto;">
+                        <p class="font-weight-bold">
+                            &copy;2018 Lazy Developers Pvt Ltd.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- sign-up form -->
+
+
+    <div class="modal fade" id="signup" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content p-2"  style="border-radius: 30px;">
+                <div class="modal-header">
+                    <h2 class="d-inline">Create New Account here</h2>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger text-center" id="signuperrormsg"></p>
+                    <form action="#" id="signupform">
+                        <div class="form-group">
+                            <label for="uname">Username</label>
+                            <input type="text" name="uname" class=" float-right form-control" />
+                        </div>
+                        <div class="form-group ">
+                            <label for="email">Email </label>
+                            <input type="text" name="email" class=" float-right form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" name="fname" class="ml-3 float-right form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" name="lname" class="ml-3 float-right form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="mbn">Contact Number </label>
+                            <input type="text" name="mbn" class=" float-right form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password </label>
+                            <input type="password" name="pwd" class=" float-right form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cnfpwd">Confirm Password </label>
+                            <input type="password" name="cnfpwd" class="ml-3 float-right form-control" />
+                        </div>
+                        
+                        <br />
+                        <div class="text-center">
+                            <button class="btn btn-info btn-lg" type="button" onclick="signup();">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center" style="margin:auto;">
+                        <p class="font-weight-bold">
+                            &copy;2018 Lazy Developers Pvt Ltd.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- carousel -->
+    <div id="datacards" class="carousel" data-ride="carousel" style="display:none;" data-interval="false">
+
+        <!-- indicators -->
+        <!--
+        <ul class="carousel-indicators">
+            <li class="bg-primary" data-target="#datacards" data-slide-to="0" class="actice"></li>
+            <li class="bg-primary" data-target="#datacards" data-slide-to="1"></li>
+        </ul>
+        -->
+
+        <!-- slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div id="cardwindow" style="margin-bottom: 20px;">
+
+                    <!-- row 1-->
+                    <div class="card-deck mt-5 mx-4">
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="invoice.png" class="bg-white" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Invoice</h3>
+                            </button>
+
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="client.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Clients</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="sales.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Sales Report</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="searchbill.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Search Bill</h3>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- row 2-->
+                    <div class="card-deck mt-5 mx-4">
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="product.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Manage Products/Services</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="tax.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Manage Taxes</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="employee.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Manage Employee</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="companyinfo.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">My Company Info</h3>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="carousel-item">
+                <!-- row 1 -->
+                <div id="cardwindow" style="margin-bottom: 20px;">
+                    <div class="card-deck mt-5 mx-4">
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="vehicle.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Vehicles</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="attendance.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Manage Attendance</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="salary.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Manage Salaries</h3>
+                            </button>
+                        </div>
+                        <div class="card" style="height:200px;border: 2px solid brown;">
+                            <button id="cards" type="button">
+                                <img src="comingsoon.png" style="height: 100px; width: 100px;" />
+                                <h3 class="text-center mt-2">Coming Soon......</h3>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- left & right controls -->
+        <a class="carousel-control-prev" href="#datacards" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#datacards" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+
+    </div>
+
+
+
+    <!-- cards -->
+
+
+
+
+
+
+    <!-- page footer -->
+
+    <div class="clearfix fixed-bottom" id="pagefooter">
+        <footer class=" bg-dark text-white text-center font-weight-bold">
+            &copy;2018 Lazy Developers Pvt Ltd.
+        </footer>
+    </div>
+
+    <script>
+        function login() {
+            var username = loginform.uname.value;
+            var password = loginform.pwd.value;
+            if (username == "" || password == "") {
+                loginerrormsg.innerHTML = "Empty Username/Password";
+                
+            } else if (password.length < 4) {
+                loginerrormsg.innerHTML = "Password length should be minimum 4 characters";
+            
+            } else {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('GET','http://www.mocky.io/v2/5b2581a7310000e90f6a7236',false);
+                xhttp.send();
+                
+                if(xhttp.status == 200){
+                    //TODO:
+                    $("#login").modal("hide");
+                    document.getElementById("datacards").style.display="none";
+
+                }else{
+                    loginerrormsg.innerHTML = xhttp.response;
+                    loginform.uname.innerHTML = "";
+                    loginform.pwd.innerHTML = "";
+                }
+               
+            }
+
+
+        }
+
+        function signup(){
+            var username = signupform.uname.value;
+            var email = signupform.email.value;
+            var firstname = signupform.fname.value;
+            var lastname = signupform.lname.value;
+            var mobile = signupform.mbn.value;
+            var password = signupform.pwd.value;
+            var cnfpassword = signupform.cnfpwd.value;
+            
+
+            
+        }
+    </script>
+</body>
+
+</html>
