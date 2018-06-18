@@ -46,9 +46,9 @@
             <h2 class="font-weight-bold font-italic text-white">One Stop Solution for All your business needs !!</h2>
         </div>
         <div class="d-inline-block float-right p-3">
-            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#login">Log In</button>
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#login" data-backdrop="static" data-keyboard="false">Log In</button>
             <span class="text-white mx-2"> or </span>
-            <button class="btn btn-info btn-sm mx-2" type="button" data-toggle="modal" data-target="#signup">SignUp</button>
+            <button class="btn btn-info btn-sm mx-2" type="button" data-toggle="modal" data-target="#signup" data-backdrop="static" data-keyboard="false">SignUp</button>
         </div>
 
     </div>
@@ -57,7 +57,7 @@
     <!-- login form -->
 
 
-    <div class="modal fade" id="login" role="dialog">
+    <div class="modal fade" id="login" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content p-4"  style="border-radius: 30px;">
                 <div class="modal-header">
@@ -320,7 +320,14 @@
 
 
         }
-
+        
+        function loginformClose(){
+            loginerrormsg.innerHTML="";
+            loginform.uname.value = "";
+            loginform.pwd.value = "";
+            $("#login").modal("hide");
+        }
+        
         function signup(){
             var username = signupform.uname.value;
             var email = signupform.email.value;
@@ -333,6 +340,19 @@
 
             
         }
+        
+        function signupformClose(){
+            signuperrormsg.innerHTML="";
+            signupform.uname.value="";
+            signupform.email.value="";
+            signupform.fname.value="";
+            signupform.lname.value="";
+            signupform.mbn.value="";
+            signupform.pwd.value="";
+            signupform.cnfpwd.value="";
+            $("#signup").modal("hide");
+        }
+        
     </script>
 </body>
 
