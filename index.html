@@ -114,16 +114,27 @@
                             <input type="email" name="email" class=" float-right form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="fname">First Name</label>
-                            <input type="text" name="fname" class="ml-3 float-right form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label for="lname">Last Name</label>
-                            <input type="text" name="lname" class="ml-3 float-right form-control" />
+                            <label for="name">Name</label>
+                            <input type="text" name="name" class="ml-3 float-right form-control" />
                         </div>
                         <div class="form-group">
                             <label for="mbn">Contact Number </label>
                             <input type="text" name="mbn" class=" float-right form-control" />
+                        </div>
+                        <div class="form-group">
+                            <span>Gender</span>
+                             <div class="float-right">
+                                    <div class="form-check d-inline-block mr-3">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="gender" id="male" value="Male">Male
+                                            </label>
+                                         </div>
+                                         <div class="form-check d-inline-block mx-3">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" name="gender" id="female" value="Female">Female
+                                                </label>
+                                         </div>
+                             </div>
                         </div>
                         <div class="form-group">
                             <label for="pwd">Password </label>
@@ -134,9 +145,9 @@
                             <input type="password" name="cnfpwd" class="ml-3 float-right form-control" />
                         </div>
                         
-                        <br />
+                        
                         <div class="text-center">
-                            <button class="btn btn-info btn-lg" type="button" onclick="signup();">Sign Up</button>
+                            <button class="btn btn-info btn-md" type="button" onclick="signup();">Sign Up</button>
                         </div>
                     </form>
                 </div>
@@ -331,11 +342,17 @@
         function signup(){
             var username = signupform.uname.value;
             var email = signupform.email.value;
-            var firstname = signupform.fname.value;
-            var lastname = signupform.lname.value;
+            var name = signupform.name.value;
             var mobile = signupform.mbn.value;
+            var gender = signupform.gender.value;
             var password = signupform.pwd.value;
             var cnfpassword = signupform.cnfpwd.value;
+            
+            if(password.length<4){
+                signupform.pwd.classList.add("is-invalid");
+            }else if(password!=cnfpassword){
+                signupform.cnfpwd.classList.add("is-invalid");
+            }
             
             
 
@@ -346,11 +363,14 @@
             signuperrormsg.innerHTML="";
             signupform.uname.value="";
             signupform.email.value="";
-            signupform.fname.value="";
-            signupform.lname.value="";
+            signupform.name.value="";
             signupform.mbn.value="";
+            signupform.male.checked=false;
+            signupform.female.checked=false;
             signupform.pwd.value="";
             signupform.cnfpwd.value="";
+        
+
             $("#signup").modal("hide");
         }
         
