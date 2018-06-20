@@ -69,7 +69,7 @@
                     <form action="#" id="loginform">
                         <div class="form-group">
                             <label for="uname">Username : </label>
-                            <input type="text" name="uname" class="form-control float-right" />
+                            <input type="text" name="uname" class="form-control float-right" autofocus/>
                         </div>
                         <div class="form-group">
                             <label for="pwd">Password : </label>
@@ -107,7 +107,7 @@
                     <form action="#" id="signupform">
                         <div class="form-group">
                             <label for="uname">Username</label>
-                            <input type="text" name="uname" class=" float-right form-control" />
+                            <input type="text" name="uname" class=" float-right form-control" autofocus/>
                         </div>
                         <div class="form-group ">
                             <label for="email">Email </label>
@@ -126,7 +126,7 @@
                              <div class="float-right">
                                     <div class="form-check d-inline-block mr-3">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="gender" id="male" value="Male">Male
+                                                <input type="radio" class="form-check-input" name="gender" id="male" value="Male" checked="checked">Male
                                             </label>
                                          </div>
                                          <div class="form-check d-inline-block mx-3">
@@ -147,7 +147,7 @@
                         
                         
                         <div class="text-center">
-                            <button class="btn btn-info btn-md" type="button" onclick="signup();">Sign Up</button>
+                            <button class="btn btn-info btn-md" type="button" id="signupbutton">Sign Up</button>
                         </div>
                     </form>
                 </div>
@@ -302,6 +302,108 @@
     </div>
 
     <script>
+        
+        $(document).ready( function(){
+        
+            <!-- signup form validation and action -->
+            //username
+            $(signupform.uname).focusin(function(){
+                signupform.uname.classList.remove("is-invalid");
+            });
+            
+            $(signupform.uname).focusout(function(){
+                var unamereg = /^[a-zA-Z]+[a-zA-Z0-9]*$/;
+                if(!unamereg.test(signupform.uname.value)){
+                    signupform.uname.classList.add("is-invalid");
+                    signuperrormsg.innerHTML="Invalid Username !! Only alphabets and digits allowed";
+                }else if{
+                    //TODO:
+                    $.get("",function(data,status){
+                        if(status==409){
+                            signuperrormsg.innerHTML="Username already exists !!";
+                        }
+                    });
+                }
+            });
+            
+            //email
+            $(signupform.email).focusin(function(){
+                signupform.email.classList.remove("is-invalid");
+            });
+            
+            $(signupform.email).focusout(function(){
+                var emailreg = /^[a-zA-Z]+[0-9]*(\.[a-zA-Z0-9]+)*@[a-zA-Z]+\.[a-zA-Z]+$/;
+                if(!emailreg.test(signupform.email.value)){
+                    signupform.email.classList.add("is-invalid");
+                    signuperrormsg.innerHTML="Invalid email";
+                }
+            });
+            
+            //name
+            $(signupform.name).focusin(function(){
+                signupform.name.classList.remove("is-invalid");
+            });
+            
+            $(signupform.name).focusout(function(){
+                var namereg = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+                if(!namereg.test(signupform.name.value)){
+                    signupform.name.classList.add("is-invalid");
+                    signuperrormsg.innerHTML="Invalid characters in name";
+                }
+            });
+            
+            //mobile number
+            $(signupform.mbn).focusin(function(){
+                signupform.mbn.classList.remove("is-invalid");
+            });
+            
+            $(signupform.name).focusout(function(){
+                var mbnreg = /^[0-9]+$/;
+                if(!mbnreg.test(signupform.mbn.value)){
+                    signupform.mbn.classList.add("is-invalid");
+                    signuperrormsg.innerHTML="Contact Number not valid";
+                }
+            });
+            
+            //password
+            $(signupform.pwd).focusin(function(){
+                signupform.pwd.classList.remove("is-invalid");
+            });
+            
+            $(signupform.pwd).focusout(function(){
+
+                if(signupform.pwd.value.length<4){
+                    signupform.pwd.classList.add("is-invalid");
+                    signuperrormsg.innerHTML="Password size should be greater than 4";
+                }
+            });
+            
+            //confirm-password
+            $(signupform.cnfpwd).focusin(function(){
+                signupform.cnfpwd.classList.remove("is-invalid");
+                
+            });
+            
+            $(signupform.cnfpwd).focusout(function(){
+
+                if(signupform.pwd.value!=signupform.cnfpwd.value){
+                    signupform.cnfpwd.classList.add("is-invalid");
+                    signuperrormsg.innerHTML="Password does not match";
+                }
+            });
+            
+            //signup form submission
+            $("#signupbutton").click(function(){
+                //TODO:
+            
+            });
+            
+        });
+    
+    
+    
+    
+    
         function login() {
             var username = loginform.uname.value;
             var password = loginform.pwd.value;
@@ -348,7 +450,7 @@
             var password = signupform.pwd.value;
             var cnfpassword = signupform.cnfpwd.value;
             
-            if(password.length<4){
+            if(password.length<8){
                 signupform.pwd.classList.add("is-invalid");
             }else if(password!=cnfpassword){
                 signupform.cnfpwd.classList.add("is-invalid");
