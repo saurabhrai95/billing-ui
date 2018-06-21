@@ -62,7 +62,7 @@
             <div class="modal-content p-4"  style="border-radius: 30px;">
                 <div class="modal-header">
                     <h2 class="d-inline">Welcome to Billz It</h2>
-                    <button class="btn btn-outline-danger" type="button" onclick="loginformClose();">&times;</button>
+                    <button class="btn btn-outline-danger" type="button" id="loginwindowclose">&times;</button>
                 </div>
                 <div class="modal-body mt-3">
                     <p class="text-danger text-center" id="loginerrormsg"></p>
@@ -76,7 +76,7 @@
                             <input type="password" name="pwd" class="form-control float-right" />
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary btn-sm mt-2" type="button" onclick="login();">Log In</button>
+                            <button class="btn btn-primary btn-sm mt-2" type="button" id="loginbutton">Log In</button>
                         </div>
                     </form>
                 </div>
@@ -100,7 +100,7 @@
             <div class="modal-content p-2"  style="border-radius: 30px;">
                 <div class="modal-header">
                     <h2 class="d-inline">Create New Account here</h2>
-                    <button type="button" class="btn btn-outline-danger" onclick="signupformClose();">&times;</button>
+                    <button type="button" class="btn btn-outline-danger" id="signupwindowclose">&times;</button>
                 </div>
                 <div class="modal-body">
                     <p class="text-danger text-center" id="signuperrormsg"></p>
@@ -316,10 +316,12 @@
                 if(!unamereg.test(signupform.uname.value)){
                     signupform.uname.classList.add("is-invalid");
                     signuperrormsg.innerHTML="Invalid Username !! Only alphabets and digits allowed";
-                }else if{
+                }else{
                     //TODO:
-                    $.get("",function(data,status){
-                        if(status==409){
+                    //url to verify username
+                    var url="";
+                    $.get(url,function(data,status){
+                        if(status==404){
                             signuperrormsg.innerHTML="Username already exists !!";
                         }
                     });
@@ -357,7 +359,7 @@
                 signupform.mbn.classList.remove("is-invalid");
             });
             
-            $(signupform.name).focusout(function(){
+            $(signupform.mbn).focusout(function(){
                 var mbnreg = /^[0-9]+$/;
                 if(!mbnreg.test(signupform.mbn.value)){
                     signupform.mbn.classList.add("is-invalid");
@@ -372,9 +374,9 @@
             
             $(signupform.pwd).focusout(function(){
 
-                if(signupform.pwd.value.length<4){
+                if(signupform.pwd.value.length<6){
                     signupform.pwd.classList.add("is-invalid");
-                    signuperrormsg.innerHTML="Password size should be greater than 4";
+                    signuperrormsg.innerHTML="Password size should be greater than 6";
                 }
             });
             
@@ -395,87 +397,92 @@
             //signup form submission
             $("#signupbutton").click(function(){
                 //TODO:
+                //edit url
+                var url="/signup";
+                
             
             });
             
+            //signup for close 
+            $("#signupwindowclose").click(function(){
+                signuperrormsg.innerHTML="";
+                signupform.uname.value="";
+                signupform.email.value="";
+                signupform.name.value="";
+                signupform.mbn.value="";
+                signupform.female.checked=false;
+                signupform.male.checked=true;
+                signupform.pwd.value="";
+                signupform.cnfpwd.value="";
+                signupform.uname.classList.remove("is-invalid");
+                signupform.email.classList.remove("is-invalid");
+                signupform.name.classList.remove("is-invalid");
+                signupform.mbn.classList.remove("is-invalid");
+                signupform.pwd.classList.remove("is-invalid");
+                signupform.cnfpwd.classList.remove("is-invalid");
+                $("#signup").modal("hide");
+            });
+            
+            <!-- login form validation and action -->
+            
+            //username
+            $(loginform.uname).focusin(function(){
+                loginform.uname.classList.remove("is-invalid");
+            });
+            
+            $(loginform.uname).focusout(function(){
+                var unamereg = /^[a-zA-Z]+[a-zA-Z0-9]*$/;
+                if(!unamereg.test(loginform.uname.value)){
+                    loginform.uname.classList.add("is-invalid");
+                    loginerrormsg.innerHTML="Invalid Username !! Only alphabets and digits allowed";
+                }
+            });
+            
+            
+            //login form submission
+            $("#loginbutton").click(function(){
+                var username = loginform.uname.value;
+                var password = loginform.pwd.value;
+                if (username == "" || password == "") {
+                    loginerrormsg.innerHTML = "Empty Username/Password";
+                        
+                }else if(loginerrormsg.innerHTML.length == 0){
+                    //TODO:
+                    //edit url
+                    var url="/login";
+                    $.get(url , function(data , status){
+                        if(status==200){
+                            //TODO:
+                            //code for homepage after login
+                            $("#login").modal("hide");
+                            document.getElementById("datacards").style.display="none";
+                            
+                        }else if(status == 401 ){
+                            loginerrormsg.innerHTML = "Invalid Password";
+                            loginform.pwd.value = "";
+                        }else if(status == 404){
+                            loginerrormsg.innerHTML = "Username does not exist";
+                            loginform.uname.value = "";
+                            loginform.pwd.value = "";
+                        
+                        }
+                    });
+                }
+            
+            });
+            
+            //login close
+            $("#loginwindowclose").click(function(){
+                loginerrormsg.innerHTML="";
+                loginform.uname.value = "";
+                loginform.pwd.value = "";
+                $("#login").modal("hide");
+            });
+            
+            
+            //end
         });
     
-    
-    
-    
-    
-        function login() {
-            var username = loginform.uname.value;
-            var password = loginform.pwd.value;
-            if (username == "" || password == "") {
-                loginerrormsg.innerHTML = "Empty Username/Password";
-                
-            } else if (password.length < 4) {
-                loginerrormsg.innerHTML = "Password length should be minimum 4 characters";
-            
-            } else {
-                var xhttp = new XMLHttpRequest();
-                xhttp.open('GET','http://www.mocky.io/v2/5b2581a7310000e90f6a7236',false);
-                xhttp.send();
-                
-                if(xhttp.status == 200){
-                    //TODO:
-                    $("#login").modal("hide");
-                    document.getElementById("datacards").style.display="none";
-
-                }else{
-                    loginerrormsg.innerHTML = xhttp.response;
-                    loginform.uname.innerHTML = "";
-                    loginform.pwd.innerHTML = "";
-                }
-               
-            }
-
-
-        }
-        
-        function loginformClose(){
-            loginerrormsg.innerHTML="";
-            loginform.uname.value = "";
-            loginform.pwd.value = "";
-            $("#login").modal("hide");
-        }
-        
-        function signup(){
-            var username = signupform.uname.value;
-            var email = signupform.email.value;
-            var name = signupform.name.value;
-            var mobile = signupform.mbn.value;
-            var gender = signupform.gender.value;
-            var password = signupform.pwd.value;
-            var cnfpassword = signupform.cnfpwd.value;
-            
-            if(password.length<8){
-                signupform.pwd.classList.add("is-invalid");
-            }else if(password!=cnfpassword){
-                signupform.cnfpwd.classList.add("is-invalid");
-            }
-            
-            
-
-            
-        }
-        
-        function signupformClose(){
-            signuperrormsg.innerHTML="";
-            signupform.uname.value="";
-            signupform.email.value="";
-            signupform.name.value="";
-            signupform.mbn.value="";
-            signupform.male.checked=false;
-            signupform.female.checked=false;
-            signupform.pwd.value="";
-            signupform.cnfpwd.value="";
-        
-
-            $("#signup").modal("hide");
-        }
-        
     </script>
 </body>
 
