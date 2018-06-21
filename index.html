@@ -3,16 +3,16 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
 
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
 
     <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="./js/popper.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
     <style>
         .form-control {
             width: auto;
@@ -30,7 +30,7 @@
             width: 100%;
         }
 
-        
+
     </style>
 </head>
 
@@ -38,7 +38,7 @@
 
     <!-- page header -->
 
-    <div class="bg-dark clearfix text-center" id="pageheader">
+    <div class="bg-dark clearfix text-center" id="pageheader" style="display:block;">
         <div class="d-inline-block float-left">
             <img src="logo.png" class=" mx-3 my-2" />
         </div>
@@ -53,6 +53,9 @@
 
     </div>
 
+    <div class="clearfix bg-dark w-100 h-10" id="homepageheader" style="display:none;">
+        <h1>this is home page header</h1>
+    </div>
 
     <!-- login form -->
 
@@ -144,8 +147,8 @@
                             <label for="cnfpwd">Confirm Password </label>
                             <input type="password" name="cnfpwd" class="ml-3 float-right form-control" />
                         </div>
-                        
-                        
+
+
                         <div class="text-center">
                             <button class="btn btn-info btn-md" type="button" id="signupbutton">Sign Up</button>
                         </div>
@@ -302,15 +305,15 @@
     </div>
 
     <script>
-        
+
         $(document).ready( function(){
-        
+
             <!-- signup form validation and action -->
             //username
             $(signupform.uname).focusin(function(){
                 signupform.uname.classList.remove("is-invalid");
             });
-            
+
             $(signupform.uname).focusout(function(){
                 var unamereg = /^[a-zA-Z]+[a-zA-Z0-9]*$/;
                 if(!unamereg.test(signupform.uname.value)){
@@ -327,12 +330,12 @@
                     });
                 }
             });
-            
+
             //email
             $(signupform.email).focusin(function(){
                 signupform.email.classList.remove("is-invalid");
             });
-            
+
             $(signupform.email).focusout(function(){
                 var emailreg = /^[a-zA-Z]+[0-9]*(\.[a-zA-Z0-9]+)*@[a-zA-Z]+\.[a-zA-Z]+$/;
                 if(!emailreg.test(signupform.email.value)){
@@ -340,12 +343,12 @@
                     signuperrormsg.innerHTML="Invalid email";
                 }
             });
-            
+
             //name
             $(signupform.name).focusin(function(){
                 signupform.name.classList.remove("is-invalid");
             });
-            
+
             $(signupform.name).focusout(function(){
                 var namereg = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
                 if(!namereg.test(signupform.name.value)){
@@ -353,12 +356,12 @@
                     signuperrormsg.innerHTML="Invalid characters in name";
                 }
             });
-            
+
             //mobile number
             $(signupform.mbn).focusin(function(){
                 signupform.mbn.classList.remove("is-invalid");
             });
-            
+
             $(signupform.mbn).focusout(function(){
                 var mbnreg = /^[0-9]+$/;
                 if(!mbnreg.test(signupform.mbn.value)){
@@ -366,12 +369,12 @@
                     signuperrormsg.innerHTML="Contact Number not valid";
                 }
             });
-            
+
             //password
             $(signupform.pwd).focusin(function(){
                 signupform.pwd.classList.remove("is-invalid");
             });
-            
+
             $(signupform.pwd).focusout(function(){
 
                 if(signupform.pwd.value.length<6){
@@ -379,13 +382,13 @@
                     signuperrormsg.innerHTML="Password size should be greater than 6";
                 }
             });
-            
+
             //confirm-password
             $(signupform.cnfpwd).focusin(function(){
                 signupform.cnfpwd.classList.remove("is-invalid");
-                
+
             });
-            
+
             $(signupform.cnfpwd).focusout(function(){
 
                 if(signupform.pwd.value!=signupform.cnfpwd.value){
@@ -393,17 +396,29 @@
                     signuperrormsg.innerHTML="Password does not match";
                 }
             });
-            
+
             //signup form submission
             $("#signupbutton").click(function(){
                 //TODO:
                 //edit url
-                var url="/signup";
-                
-            
+                var url = "http://www.mocky.io/v2/5b2bf3283000006200234863";
+                var formdata = $("#signupform").serialize();
+                $.post(url ,formdata ,function(data, status, xhr){
+                    if(xhr.status==200){
+                        alert("User registered succesfully");
+                        $("#signupwindowclose").click();
+
+                    }else{
+                        alert("Unable to register !! Try again later !!");
+                        $("#signupwindowclose").click();
+                        $("#signup").modal("show");
+                    }
+
+                });
+
             });
-            
-            //signup for close 
+
+            //signup for close
             $("#signupwindowclose").click(function(){
                 signuperrormsg.innerHTML="";
                 signupform.uname.value="";
@@ -422,14 +437,14 @@
                 signupform.cnfpwd.classList.remove("is-invalid");
                 $("#signup").modal("hide");
             });
-            
+
             <!-- login form validation and action -->
-            
+
             //username
             $(loginform.uname).focusin(function(){
                 loginform.uname.classList.remove("is-invalid");
             });
-            
+
             $(loginform.uname).focusout(function(){
                 var unamereg = /^[a-zA-Z]+[a-zA-Z0-9]*$/;
                 if(!unamereg.test(loginform.uname.value)){
@@ -437,40 +452,41 @@
                     loginerrormsg.innerHTML="Invalid Username !! Only alphabets and digits allowed";
                 }
             });
-            
-            
+
+
             //login form submission
             $("#loginbutton").click(function(){
                 var username = loginform.uname.value;
                 var password = loginform.pwd.value;
                 if (username == "" || password == "") {
                     loginerrormsg.innerHTML = "Empty Username/Password";
-                        
+
                 }else if(loginerrormsg.innerHTML.length == 0){
                     //TODO:
                     //edit url
-                    var url="/login";
-                    $.get(url , function(data , status){
-                        if(status==200){
-                            //TODO:
-                            //code for homepage after login
-                            $("#login").modal("hide");
-                            document.getElementById("datacards").style.display="none";
-                            
-                        }else if(status == 401 ){
+                    var url="http://www.mocky.io/v2/5b2bf3283000006200234863";
+                    $.get(url , function(data , status ,xhr){
+
+                        if(xhr.status==200){
+                            $("#loginwindowclose").click();
+                            document.getElementById("pageheader").style.display="none";
+                            document.getElementById("homepageheader").style.display="block";
+                            document.getElementById("datacards").style.display="block";
+
+                        }else if(xhr.status == 401 ){
                             loginerrormsg.innerHTML = "Invalid Password";
                             loginform.pwd.value = "";
-                        }else if(status == 404){
+                        }else if(xhr.status == 404){
                             loginerrormsg.innerHTML = "Username does not exist";
                             loginform.uname.value = "";
                             loginform.pwd.value = "";
-                        
+
                         }
                     });
                 }
-            
+
             });
-            
+
             //login close
             $("#loginwindowclose").click(function(){
                 loginerrormsg.innerHTML="";
@@ -478,11 +494,11 @@
                 loginform.pwd.value = "";
                 $("#login").modal("hide");
             });
-            
-            
+
+
             //end
         });
-    
+
     </script>
 </body>
 
